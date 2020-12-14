@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p>b page</p>
+  <span id="message"></span>
+
+  <script>
+    window.onmessage = function (e) {
+      // 接受消息
+      console.log('b page onmessage', e.data);
+      document.getElementById('message').innerHTML = `收到${e.origin}的消息：${e.data}`;
+      top.postMessage('b 页面收到消息', 'http://localhost:3000/a.html');
+    }
+  </script>
+</body>
+</html>

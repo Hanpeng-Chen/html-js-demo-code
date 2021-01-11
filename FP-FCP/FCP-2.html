@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首屏时间计算-统计首屏最慢图片加载时间</title>
+  <script>
+    window.pageStartTime = Date.now()
+  </script>
+</head>
+
+<body>
+  <img src="https://gitee.com/HanpengChen/blog-images/raw/master/blogImages/2021/spring/20210107155629.png" alt="img" onload="load()">
+  <img src="https://gitee.com/HanpengChen/blog-images/raw/master/blogImages/2020/autumn/article-gzh-qrcode.png" alt="img" onload="load()">
+  <script>
+    function load() {
+      window.firstScreen = Date.now()
+    }
+    window.onload = function () {
+      // 首屏时间
+      console.log(window.firstScreen - window.pageStartTime)
+    }
+  </script>
+</body>
+</html>

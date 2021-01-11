@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>白屏时间计算-常规方法</title>
+  <script>
+    window.pageStartTime = Date.now()
+  </script>
+  <link rel="stylesheet" href="https://b-gold-cdn.xitu.io/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="https://b-gold-cdn.xitu.io/asset/fw-icon/1.0.9/iconfont.css">
+  <script>
+    window.firstPaint = Date.now()
+    console.log(`白屏时间：${window.firstPaint - window.pageStartTime}`)
+  </script>
+</head>
+<body>
+  <div>这是常规计算白屏时间的示例页面</div>
+</body>
+</html>

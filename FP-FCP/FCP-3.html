@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首屏时间计算-自定义模块计算法</title>
+  <script>
+    window.pageStartTime = Date.now()
+  </script>
+</head>
+
+<body>
+  <div class="module-1"></div>
+
+  <div class="module-2"></div>
+  <script type="text/javascript">
+    setTimeout(() => {
+      // 假设这里异步加载首屏要显示的文章列表数据
+      window.firstScreen = Date.now();
+      console.log(window.firstScreen - window.pageStartTime)
+    }, 500)
+  </script>
+  <div class="module-3"></div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单例模式弹框</title>
+</head>
+<style>
+  #modal {
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #999;
+    text-align: center;
+  }
+</style>
+<body>
+  <button id="open">打开弹窗</button>
+  <button id="close">关闭弹窗</button>
+</body>
+<script>
+  // 闭包
+  const Modal = (function(){
+    let modal = null;
+    return function() {
+      if (!modal) {
+        modal = document.createElement('div')
+        modal.innerHTML = '全局唯一的modal弹窗'
+        modal.id = 'modal'
+        modal.style.display = 'none'
+        document.body.appendChild(modal)
+      }
+      return modal
+    }
+  })()
+
+  document.getElementById('open').addEventListener('click', function (){
+    const modal = new Modal()
+    modal.style.display = 'block'
+  })
+  document.getElementById('close').addEventListener('click', function (){
+    const modal = new Modal()
+    modal.style.display = 'none'
+  })
+</script>
+</html>

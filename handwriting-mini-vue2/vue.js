@@ -16,10 +16,12 @@ class Compiler {
       // console.dir(childNode);
       if (this.isElementNode(childNode)) {
         // 标签节点
-        console.log('element node');
+        // console.log('element node');
+        this.compileElement(childNode)
       } else if (this.isTextNode(childNode)) {
         // 内容文本节点 {{ message }} 是否与双括号
-        console.log('text node')
+        // console.log('text node')
+        this.compileText(childNode)
       }
       if (childNode.childNodes && childNode.childNodes.length) { {
         this.compile(childNode)
@@ -27,6 +29,28 @@ class Compiler {
 
       }
     })
+  }
+
+  compileElement(node) {
+    const attributes = Array.from(node.attributes);
+    attributes.forEach(attr => {
+      const {name, value} = attr;
+      // console.log('attr', name, value)
+      // 指令 v-model  v-text v-bind  v-on:click
+      const [,directive] = name.split('-')
+      const [compileKey, eventName] = directive.split(':')
+    })
+  }
+
+  compileText(node) {
+    const content = node.textContent;
+    if (/\{\{(.+)\}\}/.test(content)) {
+      console.log('text', content)
+    }
+  }
+
+  isDirector (name) {
+    return name.startWith('v-')
   }
 
   compileFragment(el) {

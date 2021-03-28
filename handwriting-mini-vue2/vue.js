@@ -1,39 +1,3 @@
-class Watcher{
-  // node和data进行依赖收集
-  constructor(expr, vm, cb) {
-    this.expr = expr
-    this.vm = vm
-    this.cb = cb;
-    // 通过getter ，对数据进行绑定，标记当前的watcher
-    this.oldValue = this.getOldValue()
-  }
-  getOldValue(){
-    Dep.target = this;
-    const oldValue = utils.getValue(this.expr, this.vm);
-    Dep.target = null;
-    return oldValue;
-  }
-  update() {
-    const newValue = utils.getValue(this.expr, this.vm)
-    if (newValue !== this.oldValue) {
-      this.cb(newValue)
-    }
-  }
-}
-
-class Dep {
-  // 将多个数据和watcher进行绑定
-  constructor(){
-    this.collect = []
-  }
-  addWatcher(watcher) {
-    this.collect.push(watcher)
-  }
-  notify() {
-    this.collect.forEach(w => w.update())
-  }
-}
-
 const utils = {
   getValue(expr, vm) {
     return vm.$data[expr.trim()]
@@ -72,17 +36,57 @@ const utils = {
     this.textUpdater(node, result)
   },
   on(node, value, vm, eventName) {
-
+    const fn = vm.$options.methods[value]
+    node.addEventListener(eventName, fn.bind(vm), false)
   },
   textUpdater(node, value) {
-    console.log('textUpdate', node, value)
-    console.log('==========')
     node.textContent = value
   },
   modelUpdater(node, value) {
     node.value = value
   }
 }
+
+
+
+// 一个DOM节点的依赖及更新
+class Watcher{
+  // node和data进行依赖收集
+  constructor(expr, vm, cb) {
+    this.expr = expr
+    this.vm = vm
+    this.cb = cb;
+    // 通过getter ，对数据进行绑定，标记当前的watcher
+    this.oldValue = this.getOldValue()
+  }
+  getOldValue(){
+    Dep.target = this;
+    const oldValue = utils.getValue(this.expr, this.vm);
+    Dep.target = null;
+    return oldValue;
+  }
+  update() {
+    const newValue = utils.getValue(this.expr, this.vm)
+    if (newValue !== this.oldValue) {
+      this.cb(newValue)
+    }
+  }
+}
+
+// 一个数据的多个 watcher 依赖
+class Dep {
+  // 将多个数据和watcher进行绑定
+  constructor(){
+    this.collect = []
+  }
+  addWatcher(watcher) {
+    this.collect.push(watcher)
+  }
+  notify() {
+    this.collect.forEach(w => w.update())
+  }
+}
+
 
 class Compiler {
   constructor(el, vm) {
@@ -93,7 +97,7 @@ class Compiler {
 
     this.compile(fragment)
 
-    // this.el.appendChild(fragment)
+    this.el.appendChild(fragment)
   }
 
   compile(fragment) {
@@ -122,11 +126,19 @@ class Compiler {
       // console.log('attr', name, value)
       // 指令 v-model  v-text v-bind  v-on:click
       if (this.isDirector(name)) {
-        const [,directive] = name.split('-')
+        const [, directive] = name.split('-')
         const [compileKey, eventName] = directive.split(':')
         utils[compileKey](node, value, this.vm, eventName)
+      } else if (this.isEventName(name)) {
+        // @click
+        const [, eventName] = name.split('@');
+        utils['on'](node, value, this.vm, eventName)
       }
     })
+  }
+
+  isEventName(name) {
+    return name.startsWith('@')
   }
 
   compileText(node) {

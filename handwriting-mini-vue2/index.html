@@ -10,6 +10,8 @@
   <div id="app">
     <h1>{{message}}</h1>
     <input type="text" v-model="message" />
+    <button v-on:click="handleClick">v-on:handleClick</button>
+    <button @click="handleClick">@handleClick</button>
   </div>
   <script src="./vue.js"></script>
   <script>
@@ -17,10 +19,15 @@
       el: '#app',
       data: {
         message: 'hello'
+      },
+      methods: {
+        handleClick(){
+          this.message = new Date().getTime()
+        }
       }
     })
-    // vm.message = '33333'
-    console.log(vm.message)
+    vm.message = '33333'
+    // console.log(vm.message)
   </script>
 </body>
 </html>

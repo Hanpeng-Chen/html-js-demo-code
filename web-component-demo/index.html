@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>web component demo</title>
+</head>
+<body>
+  <style>
+    :root {
+      /* --background-color: #F56C6C;
+      --text-color: #C0C4CC; */
+    }
+  </style>
+  <my-button>提交</my-button>
+  <my-button type="primary">点击</my-button>
+  <my-button type="success">完成</my-button>
+
+  <template id="myBtnTemplate">
+    <button class="my-button">
+      <slot>按钮</slot>
+    </button>
+  </template>
+
+  <script>
+    class MyButton extends HTMLElement {
+      constructor(){
+        super()
+
+        let shadow = this.attachShadow({mode: 'open'})
+        let btnTeml = document.getElementById('myBtnTemplate')
+        let cloneTemplate = btnTeml.content.cloneNode(true)
+        const style = document.createElement('style')
+        const types = {
+          'primary': {
+            backgroundColor: '#409EFF',
+            color: '#FFF'
+          },
+          'default': {
+            backgroundColor: '#67C23A',
+            color: '#FFF'
+          },
+          'success': {
+            backgroundColor: '#909399',
+            color: '#FFF'
+          }
+        }
+
+        const btnType = this.getAttribute('type') || 'default'
+        style.innerHTML = `
+          .my-button {
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            display: inline-flex;
+            cursor: pointer;
+            padding: 5px 20px;
+            background: var(--background-color, ${types[btnType].backgroundColor});
+            color: var(--text-color, ${types[btnType].color});
+          }
+        `
+        shadow.appendChild(style)
+        shadow.appendChild(cloneTemplate)
+      }
+    }
+
+    window.customElements.define('my-button', MyButton)
+  </script>
+</body>
+</html>

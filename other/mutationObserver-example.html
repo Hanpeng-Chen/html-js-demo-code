@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <br>
+  <button onclick="addChild()">添加子节点</button>
+  <button onclick="stopObserve()">停止观察</button>
+
+  <script>
+    const targetNode = document.getElementById('app')
+    const config = {attributes: true, childList: true, subtree: true}
+
+    const callback = function(mutationsList, observer) {
+      for (let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          console.log('child add or remove', mutation, observer)
+        } else if(mutation.type === 'attributes') {
+          console.log(mutation.attributeName + ' attribute was modified')
+        }
+      }
+    }
+
+    const observer = new MutationObserver(callback)
+
+    observer.observe(targetNode, config)
+
+    function addChild() {
+      const el = document.createElement('div')
+      el.innerHTML = '333333333333333'
+      targetNode.appendChild(el)
+    }
+
+    function stopObserve() {
+      observer.disconnect()
+    }
+  </script>
+</body>
+</html>

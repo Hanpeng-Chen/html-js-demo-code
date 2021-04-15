@@ -1,5 +1,3 @@
-console.log('00000000000000')
-
 const ul = document.querySelector('ul');
 async function getList() {
   let res = await fetch('/api/list')

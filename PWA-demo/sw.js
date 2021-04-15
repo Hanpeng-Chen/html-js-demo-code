@@ -68,7 +68,7 @@ self.addEventListener('activate', (e) => {
   e.waitUntil(Promise.all([clearCache(), clients.claim()]))
 })
 
-// workbox ->workbox-webpack-plugin
 self.addEventListener('push',function (e) {
+  // console.log('addEventListener push', e.data.text())
   self.registration.showNotification(e.data.text())
 })

@@ -69,6 +69,6 @@ self.addEventListener('activate', (e) => {
 })
 
 self.addEventListener('push',function (e) {
-  // console.log('addEventListener push', e.data.text())
+  console.log('addEventListener push', e.data.text())
   self.registration.showNotification(e.data.text())
 })

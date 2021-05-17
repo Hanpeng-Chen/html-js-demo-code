@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    div {
+      height: 50px;
+      border: 1px solid #EEE;
+    }
+  </style>
+
+  <button onclick="hide()">隐藏display</button>
+  <div>
+    <div id="display">
+      <span>display:none;</span>
+    </div>
+  </div>
+
+  <script>
+    // function hide () {
+    //   const el = document.getElementById("display")
+    //   el.style.display = 'none'
+    // }
+    for (let i = 0; i <100; i++) {
+      const top = document.getElementById('display').style.top;
+      console.log(top)
+    }
+  </script>
+</body>
+</html>

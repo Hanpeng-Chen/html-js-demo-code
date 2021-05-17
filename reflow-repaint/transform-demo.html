@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <style>
+    #container {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      border: 1px solid burlywood;
+    }
+
+    .rect {
+      width: 100px;
+      height: 100px;
+      left: 0;
+      top: 0;
+      background-color: gray;
+    }
+
+    .animate .rect {
+      animation: run-around 4s ease-in-out infinite;
+    }
+
+    @keyframes run-around {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(200px, 0);
+      }
+
+      50% {
+        transform: translate(200px, 200px);
+      }
+
+      75% {
+        transform: translate(0, 200px);
+      }
+    }
+  </style>
+
+  <script>
+    function start() {
+      const el = document.getElementById("container")
+      el.classList.contains('animate') ? el.classList.remove('animate') : el.classList.add('animate')
+    }
+  </script>
+
+  <button onclick="start()">开启/停止动画</button>
+  <div id="container">
+    <div class="rect"></div>
+  </div>
+</body>
+
+</html>

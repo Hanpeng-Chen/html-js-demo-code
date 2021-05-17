@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    div {
+      height: 50px;
+      border: 1px solid #EEE;
+    }
+  </style>
+
+  <button onclick="hide1()">隐藏visibility</button>
+  <div>
+    <div id="visibility">
+      <span>visibility:hidden;</span>
+    </div>
+  </div>
+
+  <script>
+    function hide1 () {
+      const el = document.getElementById("visibility")
+      el.style.visibility = 'hidden'
+    }
+  </script>
+</body>
+</html>

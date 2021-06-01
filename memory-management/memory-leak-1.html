@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var theThing = null;
+    var replaceThing = function() {
+      var originalThing = theThing;
+      var unused = function() {
+        if (originalThing) { // 对originalThing的引用
+          console.log('hello world')
+        }
+      };
+      theThing = {
+        longStr: new Array(1000000).join('*'),
+        someMethod: function() {
+          console.log('message');
+        }
+      };
+    }
+    setInterval(replaceThing, 1000);
+  </script>
+</body>
+</html>
